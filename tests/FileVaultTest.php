@@ -1,19 +1,19 @@
 <?php
 
-namespace SoareCostin\FileVault\Tests;
+namespace Brainstud\FileVault\Tests;
 
+use Brainstud\FileVault\Facades\FileVault;
+use Brainstud\FileVault\FileVaultServiceProvider;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Storage;
 use Orchestra\Testbench\TestCase;
-use SoareCostin\FileVault\Facades\FileVault;
-use SoareCostin\FileVault\FileVaultServiceProvider;
 
 class FileVaultTest extends TestCase
 {
     /**
      * Get package providers.
      *
-     * @param  \Illuminate\Foundation\Application  $app
-     *
+     * @param  Application  $app
      * @return array
      */
     protected function getPackageProviders($app)
@@ -26,8 +26,7 @@ class FileVaultTest extends TestCase
     /**
      * Get package aliases.
      *
-     * @param  \Illuminate\Foundation\Application  $app
-     *
+     * @param  Application  $app
      * @return array
      */
     protected function getPackageAliases($app)
@@ -40,7 +39,7 @@ class FileVaultTest extends TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -62,7 +61,7 @@ class FileVaultTest extends TestCase
     protected function generateRandomKey()
     {
         return 'base64:'.base64_encode(
-            \SoareCostin\FileVault\FileVault::generateKey()
+            \Brainstud\FileVault\FileVault::generateKey()
         );
     }
 
@@ -87,7 +86,7 @@ class FileVaultTest extends TestCase
 
         // Test if the encrypted file exists
         $this->assertFileExists(
-            Storage::path("{$fileName}.enc")
+            Storage::path("$fileName.enc")
         );
     }
 
@@ -100,7 +99,7 @@ class FileVaultTest extends TestCase
 
         // Test if the encrypted file exists
         $this->assertFileExists(
-            Storage::path("{$fileName}.enc")
+            Storage::path("$fileName.enc")
         );
     }
 
@@ -125,7 +124,7 @@ class FileVaultTest extends TestCase
         FileVault::encrypt($fileName);
 
         // Test if the original file has been deleted
-        $this->assertFileNotExists(
+        $this->assertFileDoesNotExist(
             Storage::path($fileName)
         );
     }
@@ -180,7 +179,7 @@ class FileVaultTest extends TestCase
         FileVault::decrypt("{$fileName}.enc");
 
         // Test that the encrypted file was deleted after decryption
-        $this->assertFileNotExists(
+        $this->assertFileDoesNotExist(
             Storage::path("{$fileName}.enc")
         );
     }

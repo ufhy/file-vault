@@ -1,36 +1,38 @@
 {
-    "name": "soarecostin/file-vault",
+    "name": "brainstud/file-vault",
     "description": "",
     "keywords": [
         "laravel", "encrypt", "decrypt", "encryption", "decryption",
         "cbc", "php", "file", "file-vault"
     ],
-    "homepage": "https://github.com/soarecostin/file-vault",
+    "homepage": "https://github.com/brainstudnl/file-vault",
     "license": "MIT",
     "type": "library",
     "authors": [
         {
-            "name": "Costin Soare",
-            "email": "soarecostin@gmail.com",
+            "name": "Niek Pijp",
+            "email": "niek@brainstud.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.2|^8.0",
-        "illuminate/support": "5.8.* || 6.*.* || ^7.0 || ^8.0"
+        "php": "^8.0",
+        "illuminate/support": "^8.0 || ^9.0 ",
+        "ext-openssl": "*"
     },
     "require-dev": {
-        "orchestra/testbench": "^5.0|^6.0",
-        "phpunit/phpunit": "^8.0"
+        "orchestra/testbench": "^6.0|^7.0",
+        "phpstan/phpstan": "^1.4",
+        "phpunit/phpunit": "^9.0"
     },
     "autoload": {
         "psr-4": {
-            "SoareCostin\\FileVault\\": "src"
+            "Brainstud\\FileVault\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "SoareCostin\\FileVault\\Tests\\": "tests"
+            "Brainstud\\FileVault\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -44,10 +46,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "SoareCostin\\FileVault\\FileVaultServiceProvider"
+                "Brainstud\\FileVault\\FileVaultServiceProvider"
             ],
             "aliases": {
-                "FileVault": "SoareCostin\\FileVault\\Facades\\FileVault"
+                "FileVault": "Brainstud\\FileVault\\Facades\\FileVault"
             }
         }
     }

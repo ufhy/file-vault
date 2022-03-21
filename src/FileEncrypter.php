@@ -1,6 +1,6 @@
 <?php
 
-namespace SoareCostin\FileVault;
+namespace Brainstud\FileVault;
 
 use Exception;
 use Illuminate\Support\Str;
@@ -19,25 +19,25 @@ class FileEncrypter
      *
      * @var string
      */
-    protected $key;
+    protected string $key;
 
     /**
      * The algorithm used for encryption.
      *
      * @var string
      */
-    protected $cipher;
+    protected string $cipher;
 
     /**
      * Create a new encrypter instance.
      *
-     * @param  string  $key
-     * @param  string  $cipher
+     * @param string $key
+     * @param string $cipher
      * @return void
      *
      * @throws \RuntimeException
      */
-    public function __construct($key, $cipher = 'AES-128-CBC')
+    public function __construct(string $key, string $cipher = 'AES-128-CBC')
     {
         // If the key starts with "base64:", we will need to decode the key before handing
         // it off to the encrypter. Keys may be base-64 encoded for presentation and we
@@ -57,31 +57,32 @@ class FileEncrypter
     /**
      * Determine if the given key and cipher combination is valid.
      *
-     * @param  string  $key
-     * @param  string  $cipher
+     * @param string $key
+     * @param string $cipher
      * @return bool
      */
-    public static function supported($key, $cipher)
+    public static function supported($key, $cipher): bool
     {
         $length = mb_strlen($key, '8bit');
 
         return ($cipher === 'AES-128-CBC' && $length === 16) ||
-               ($cipher === 'AES-256-CBC' && $length === 32);
+            ($cipher === 'AES-256-CBC' && $length === 32);
     }
 
     /**
      * Encrypts the source file and saves the result in a new file.
      *
-     * @param string $sourcePath  Path to file that should be encrypted
-     * @param string $destPath  File name where the encryped file should be written to.
+     * @param string $sourcePath Path to file that should be encrypted
+     * @param string $destPath File name where the encryped file should be written to.
      * @return bool
+     * @throws Exception
      */
-    public function encrypt($sourcePath, $destPath)
+    public function encrypt(string $sourcePath, string $destPath): bool
     {
         $fpOut = $this->openDestFile($destPath);
         $fpIn = $this->openSourceFile($sourcePath);
 
-        // Put the initialzation vector to the beginning of the file
+        // Put the initialization vector to the beginning of the file
         $iv = openssl_random_pseudo_bytes(16);
         fwrite($fpOut, $iv);
 
@@ -99,6 +100,7 @@ class FileEncrypter
                 && $i + 1 < $numberOfChunks
             ) {
                 fseek($fpIn, 16 * self::FILE_ENCRYPTION_BLOCKS * $i);
+
                 continue;
             }
 
@@ -118,16 +120,17 @@ class FileEncrypter
     /**
      * Decrypts the source file and saves the result in a new file.
      *
-     * @param string $sourcePath   Path to file that should be decrypted
-     * @param string $destPath  File name where the decryped file should be written to.
+     * @param string $sourcePath Path to file that should be decrypted
+     * @param string $destPath File name where the decryped file should be written to.
      * @return bool
+     * @throws Exception
      */
-    public function decrypt($sourcePath, $destPath)
+    public function decrypt(string $sourcePath, string $destPath): bool
     {
         $fpOut = $this->openDestFile($destPath);
         $fpIn = $this->openSourceFile($sourcePath);
 
-        // Get the initialzation vector from the beginning of the file
+        // Get the initialization vector from the beginning of the file
         $iv = fread($fpIn, 16);
 
         $numberOfChunks = ceil((filesize($sourcePath) - 16) / (16 * (self::FILE_ENCRYPTION_BLOCKS + 1)));
@@ -145,6 +148,7 @@ class FileEncrypter
                 && $i + 1 < $numberOfChunks
             ) {
                 fseek($fpIn, 16 + 16 * (self::FILE_ENCRYPTION_BLOCKS + 1) * $i);
+
                 continue;
             }
 
@@ -152,7 +156,7 @@ class FileEncrypter
                 throw new Exception('Decryption failed');
             }
 
-            // Get the the first 16 bytes of the ciphertext as the next initialization vector
+            // Get the first 16 bytes of the ciphertext as the next initialization vector
             $iv = substr($ciphertext, 0, 16);
             fwrite($fpOut, $plaintext);
 
@@ -165,6 +169,9 @@ class FileEncrypter
         return true;
     }
 
+    /**
+     * @throws Exception
+     */
     protected function openDestFile($destPath)
     {
         if (($fpOut = fopen($destPath, 'w')) === false) {
@@ -174,6 +181,9 @@ class FileEncrypter
         return $fpOut;
     }
 
+    /**
+     * @throws Exception
+     */
     protected function openSourceFile($sourcePath)
     {
         $contextOpts = Str::startsWith($sourcePath, 's3://') ? ['s3' => ['seekable' => true]] : [];
