@@ -1,14 +1,14 @@
 # File encryption / decryption in Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/soarecostin/file-vault.svg?style=flat-square)](https://packagist.org/packages/soarecostin/file-vault)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/brainstud/file-vault.svg?style=flat-square)](https://packagist.org/packages/brainstud/file-vault)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/soarecostin/file-vault/master.svg?style=flat-square)](https://travis-ci.org/soarecostin/file-vault)
-[![Quality Score](https://img.shields.io/scrutinizer/g/soarecostin/file-vault.svg?style=flat-square)](https://scrutinizer-ci.com/g/soarecostin/file-vault)
-[![StyleCI](https://styleci.io/repos/221933072/shield)](https://styleci.io/repos/221933072)
-[![Total Downloads](https://img.shields.io/packagist/dt/soarecostin/file-vault.svg?style=flat-square)](https://packagist.org/packages/soarecostin/file-vault)
+[![Total Downloads](https://img.shields.io/packagist/dt/brainstud/file-vault.svg?style=flat-square)](https://packagist.org/packages/brainstud/file-vault)
 
 With this package, you can encrypt and decrypt files of any size in your Laravel project. This package uses streams and [CBC encryption](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_(CBC)), encrypting / decrypting a segment of data at a time.
 
+## Fork
+
+This package is forked from [soarecostin/file-vault](https://github.com/soarecostin/file-vault). 
 
 ## Installation and usage
 
@@ -17,7 +17,7 @@ This package requires PHP 7.2 and Laravel 5.8 or higher.
 You can install the package via composer:
 
 ```bash
-composer require soarecostin/file-vault
+composer require brainstud/file-vault
 ```
 
 ## Usage
@@ -33,7 +33,7 @@ This package will automatically register a facade called `FileVault`. The `FileV
 If you want to change the default `disk` or change the `key`/`cipher` used for encryption, you can publish the config file:
 
 ```
-php artisan vendor:publish --provider="SoareCostin\FileVault\FileVaultServiceProvider"
+php artisan vendor:publish --provider="Brainstud\FileVault\FileVaultServiceProvider"
 ```
 
 This is the contents of the published file:
@@ -190,12 +190,12 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ### Security
 
-If you discover any security related issues, please email soarecostin@gmail.com instead of using the issue tracker.
+If you discover any security related issues, please email dev@brainstud.com instead of using the issue tracker.
 
 ## Credits
 
+- [Brainstud](https://github.com/brainstudnl)
 - [Costin Soare](https://github.com/soarecostin)
-- [All Contributors](../../contributors)
 
 ## License
 
