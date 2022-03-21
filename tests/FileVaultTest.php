@@ -2,10 +2,10 @@
 
 namespace Brainstud\FileVault\Tests;
 
-use Illuminate\Support\Facades\Storage;
-use Orchestra\Testbench\TestCase;
 use Brainstud\FileVault\Facades\FileVault;
 use Brainstud\FileVault\FileVaultServiceProvider;
+use Illuminate\Support\Facades\Storage;
+use Orchestra\Testbench\TestCase;
 
 class FileVaultTest extends TestCase
 {
@@ -123,7 +123,7 @@ class FileVaultTest extends TestCase
         FileVault::encrypt($fileName);
 
         // Test if the original file has been deleted
-        $this->assertFileNotExists(
+        $this->assertFileDoesNotExist(
             Storage::path($fileName)
         );
     }
@@ -178,7 +178,7 @@ class FileVaultTest extends TestCase
         FileVault::decrypt("{$fileName}.enc");
 
         // Test that the encrypted file was deleted after decryption
-        $this->assertFileNotExists(
+        $this->assertFileDoesNotExist(
             Storage::path("{$fileName}.enc")
         );
     }
