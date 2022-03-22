@@ -8,11 +8,11 @@ With this package, you can encrypt and decrypt files of any size in your Laravel
 
 ## Fork
 
-This package is forked from [soarecostin/file-vault](https://github.com/soarecostin/file-vault). 
+This package is forked from [soarecostin/file-vault](https://github.com/soarecostin/file-vault) to add Laravel 9 support. 
 
 ## Installation and usage
 
-This package requires PHP 7.2 and Laravel 5.8 or higher.  
+This package requires PHP 8.0 and Laravel 8.0 or higher.  
 
 You can install the package via composer:
 
