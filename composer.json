@@ -27,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Brainstud\\FileVault\\": "src"
+            "Ufhy\\FileVault\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Brainstud\\FileVault\\Tests\\": "tests"
+            "Ufhy\\FileVault\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -46,10 +46,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Brainstud\\FileVault\\FileVaultServiceProvider"
+                "Ufhy\\FileVault\\FileVaultServiceProvider"
             ],
             "aliases": {
-                "FileVault": "Brainstud\\FileVault\\Facades\\FileVault"
+                "FileVault": "Ufhy\\FileVault\\Facades\\FileVault"
             }
         }
     }

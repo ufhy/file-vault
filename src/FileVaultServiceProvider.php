@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainstud\FileVault;
+namespace Ufhy\FileVault;
 
 use Illuminate\Support\ServiceProvider;
 
